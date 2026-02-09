@@ -33,6 +33,153 @@
             color: var(--text);
         }
 
+        /* Auth Pages */
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .auth-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .auth-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .auth-logo svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            background: var(--secondary);
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-light);
+        }
+
+        .auth-tab.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-primary:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        .auth-error {
+            background: #fee2e2;
+            color: var(--danger);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .auth-success {
+            background: #dcfce7;
+            color: var(--accent);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
         /* Header */
         header {
             background: var(--card-bg);
@@ -63,6 +210,54 @@
         .logo svg {
             width: 32px;
             height: 32px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-light);
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+            background: #fee2e2;
         }
 
         .header-actions {
@@ -127,7 +322,6 @@
             display: none;
         }
 
-        /* Sidebar Toggle Button */
         .sidebar-toggle {
             padding: 0.5rem;
             border: 2px solid var(--border);
@@ -459,71 +653,16 @@
             margin-bottom: 1.5rem;
         }
 
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
-            font-family: inherit;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
         .form-actions {
             display: flex;
             gap: 1rem;
             margin-top: 2rem;
         }
 
-        .btn {
-            padding: 0.875rem 1.5rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            flex: 1;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-        }
-
         .btn-secondary {
             background: var(--secondary);
             color: var(--text);
+            flex: 1;
         }
 
         .btn-secondary:hover {
@@ -769,164 +908,237 @@
             color: var(--text-light);
             font-size: 0.875rem;
         }
+
+        /* Filter Toggle Button */
+        .filter-toggle {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-light);
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .filter-toggle:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #eef2ff;
+        }
+
+        .filter-toggle.active {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #eef2ff;
+        }
+
+        .filter-toggle svg {
+            width: 14px;
+            height: 14px;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="logo">
+    <!-- Auth Page -->
+    <div class="auth-page" id="authPage">
+        <div class="auth-card">
+            <div class="auth-logo">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                 </svg>
                 TaskFlow
             </div>
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </button>
-                <div class="header-actions">
-                <button class="header-btn" onclick="exportData()" title="Export data to JSON file">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="7 10 12 15 17 10"/>
-                        <line x1="12" y1="15" x2="12" y2="3"/>
-                    </svg>
-                    Export
-                </button>
-                <button class="header-btn" onclick="document.getElementById('importFile').click()" title="Import data from JSON file">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="17 8 12 3 7 8"/>
-                        <line x1="12" y1="3" x2="12" y2="15"/>
-                    </svg>
-                    Import
-                </button>
-                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+            <p class="auth-subtitle">Manage your tasks efficiently</p>
+
+            <div class="auth-error" id="authError"></div>
+            <div class="auth-success" id="authSuccess"></div>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
             </div>
+
+            <!-- Login Form -->
+            <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" id="loginBtn">Login</button>
+            </form>
+
+            <!-- Signup Form -->
+            <form class="auth-form" id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signupUsername">Username</label>
+                    <input type="text" id="signupUsername" placeholder="Choose username" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupNickname">Nickname</label>
+                    <input type="text" id="signupNickname" placeholder="Your display name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Choose password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" id="signupBtn">Create Account</button>
+            </form>
         </div>
-    </header>
+    </div>
 
-    <div class="container">
-        <aside class="sidebar">
-            <h2>Projects</h2>
-            <ul class="project-list" id="projectList"></ul>
-            <button class="add-project-btn" onclick="openProjectModal()">
-                <span>+</span> Add Project
-            </button>
-        </aside>
-
-        <main class="main-content">
-            <div class="content-header">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <h1 id="projectTitle">All Tasks</h1>
-                    <div class="view-toggle">
-                        <button id="listViewBtn" class="active" onclick="switchView('list')">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;">
-                                <line x1="8" y1="6" x2="21" y2="6"></line>
-                                <line x1="8" y1="12" x2="21" y2="12"></line>
-                                <line x1="8" y1="18" x2="21" y2="18"></line>
-                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                            </svg>
-                            List
-                        </button>
-                        <button id="boardViewBtn" onclick="switchView('board')">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;">
-                                <rect x="3" y="3" width="7" height="7"></rect>
-                                <rect x="14" y="3" width="7" height="7"></rect>
-                                <rect x="14" y="14" width="7" height="7"></rect>
-                                <rect x="3" y="14" width="7" height="7"></rect>
-                            </svg>
-                            Board
-                        </button>
+    <!-- Main App -->
+    <div id="mainApp" style="display: none;">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                    </svg>
+                    TaskFlow
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span class="user-name" id="userName">User</span>
                     </div>
-                    <!-- Task Filter Toggle -->
-                    <button class="header-btn" id="filterToggleBtn" onclick="toggleFilter()" title="Toggle completed tasks">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;">
-                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+                    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
                         </svg>
-                        <span id="filterBtnText">Active</span>
                     </button>
                 </div>
-                <button class="add-task-btn" onclick="openTaskModal()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                    Add Task
+            </div>
+        </header>
+
+        <div class="container">
+            <aside class="sidebar">
+                <h2>Projects</h2>
+                <ul class="project-list" id="projectList"></ul>
+                <button class="add-project-btn" onclick="openProjectModal()">
+                    <span>+</span> Add Project
                 </button>
-            </div>
+            </aside>
 
-            <div class="task-stats" id="taskStats"></div>
-
-            <div class="list-view" id="listView">
-                <div class="task-grid" id="taskGrid"></div>
-            </div>
-
-            <div class="board-view" id="boardView">
-                <div class="board-grid" id="boardGrid"></div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Project Modal -->
-    <div class="modal-overlay" id="projectModal">
-        <div class="modal">
-            <h2 id="projectModalTitle">Add New Project</h2>
-            <form id="projectForm" onsubmit="saveProject(event)">
-                <div class="form-group">
-                    <label for="projectName">Project Name</label>
-                    <input type="text" id="projectName" placeholder="Enter project name" required>
+            <main class="main-content">
+                <div class="content-header">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <h1 id="projectTitle">All Tasks</h1>
+                        <div class="view-toggle">
+                            <button id="listViewBtn" class="active" onclick="switchView('list')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;">
+                                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                </svg>
+                                List
+                            </button>
+                            <button id="boardViewBtn" onclick="switchView('board')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;">
+                                    <rect x="3" y="3" width="7" height="7"></rect>
+                                    <rect x="14" y="3" width="7" height="7"></rect>
+                                    <rect x="14" y="14" width="7" height="7"></rect>
+                                    <rect x="3" y="14" width="7" height="7"></rect>
+                                </svg>
+                                Board
+                            </button>
+                        </div>
+                        <button class="filter-toggle" id="filterToggleBtn" onclick="toggleFilter()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                            </svg>
+                            <span id="filterBtnText">Active</span>
+                        </button>
+                    </div>
+                    <button class="add-task-btn" onclick="openTaskModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Task
+                    </button>
                 </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Project</button>
+
+                <div class="task-stats" id="taskStats"></div>
+
+                <div class="list-view" id="listView">
+                    <div class="task-grid" id="taskGrid"></div>
                 </div>
-            </form>
+
+                <div class="board-view" id="boardView">
+                    <div class="board-grid" id="boardGrid"></div>
+                </div>
+            </main>
         </div>
-    </div>
 
-    <!-- Task Modal -->
-    <div class="modal-overlay" id="taskModal">
-        <div class="modal">
-            <h2 id="taskModalTitle">Add New Task</h2>
-            <form id="taskForm" onsubmit="saveTask(event)">
-                <div class="form-group">
-                    <label for="taskProject">Project</label>
-                    <select id="taskProject" required>
-                        <option value="">Select a project</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="taskName">Task Name</label>
-                    <input type="text" id="taskName" placeholder="What needs to be done?" required>
-                </div>
-                <div class="form-group">
-                    <label for="taskDescription">Description</label>
-                    <textarea id="taskDescription" placeholder="Add more details..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="taskPriority">Priority</label>
-                    <select id="taskPriority" required>
-                        <option value="low">Low</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="high">High</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="taskDeadline">Deadline</label>
-                    <input type="date" id="taskDeadline" required>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeTaskModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Task</button>
-                </div>
-            </form>
+        <!-- Project Modal -->
+        <div class="modal-overlay" id="projectModal">
+            <div class="modal">
+                <h2 id="projectModalTitle">Add New Project</h2>
+                <form id="projectForm" onsubmit="saveProject(event)">
+                    <div class="form-group">
+                        <label for="projectName">Project Name</label>
+                        <input type="text" id="projectName" placeholder="Enter project name" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Project</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Task Modal -->
+        <div class="modal-overlay" id="taskModal">
+            <div class="modal">
+                <h2 id="taskModalTitle">Add New Task</h2>
+                <form id="taskForm" onsubmit="saveTask(event)">
+                    <div class="form-group">
+                        <label for="taskProject">Project</label>
+                        <select id="taskProject" required>
+                            <option value="">Select a project</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskName">Task Name</label>
+                        <input type="text" id="taskName" placeholder="What needs to be done?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Description</label>
+                        <textarea id="taskDescription" placeholder="Add more details..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskPriority">Priority</label>
+                        <select id="taskPriority" required>
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDeadline">Deadline</label>
+                        <input type="date" id="taskDeadline" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeTaskModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Task</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -935,102 +1147,200 @@
         const API_URL = '/api';
 
         // State
+        let token = localStorage.getItem('token');
+        let currentUser = null;
         let projects = [];
         let tasks = [];
         let currentProject = 'all';
         let currentView = 'list';
-        let showCompleted = false; // false = show active tasks, true = show completed tasks
+        let showCompleted = false;
+
+        // API Functions
+        async function fetchWithAuth(url, options = {}) {
+            const headers = {
+                'Content-Type': 'application/json',
+                ...(token && { 'Authorization': `Bearer ${token}` })
+            };
+            
+            const response = await fetch(url, { ...options, headers });
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Request failed');
+            }
+            return data;
+        }
+
+        // Auth Functions
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.querySelector('.auth-tab:first-child').classList.add('active');
+                document.getElementById('loginForm').classList.add('active');
+            } else {
+                document.querySelector('.auth-tab:last-child').classList.add('active');
+                document.getElementById('signupForm').classList.add('active');
+            }
+            
+            hideAuthMessage();
+        }
+
+        function showAuthMessage(type, message) {
+            const el = type === 'error' ? document.getElementById('authError') : document.getElementById('authSuccess');
+            el.textContent = message;
+            el.style.display = 'block';
+        }
+
+        function hideAuthMessage() {
+            document.getElementById('authError').style.display = 'none';
+            document.getElementById('authSuccess').style.display = 'none';
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            btn.disabled = true;
+            btn.textContent = 'Logging in...';
+            
+            try {
+                const data = await fetchWithAuth(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: document.getElementById('loginUsername').value,
+                        password: document.getElementById('loginPassword').value
+                    })
+                });
+                
+                token = data.token;
+                currentUser = data.user;
+                localStorage.setItem('token', token);
+                
+                showMainApp();
+            } catch (error) {
+                showAuthMessage('error', error.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Login';
+            }
+        }
+
+        async function handleSignup(e) {
+            e.preventDefault();
+            const btn = document.getElementById('signupBtn');
+            btn.disabled = true;
+            btn.textContent = 'Creating...';
+            
+            try {
+                await fetchWithAuth(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: document.getElementById('signupUsername').value,
+                        nickname: document.getElementById('signupNickname').value,
+                        password: document.getElementById('signupPassword').value
+                    })
+                });
+                
+                showAuthMessage('success', 'Account created! Please login.');
+                document.getElementById('signupForm').reset();
+                switchAuthTab('login');
+            } catch (error) {
+                showAuthMessage('error', error.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Create Account';
+            }
+        }
+
+        function handleLogout() {
+            token = null;
+            currentUser = null;
+            localStorage.removeItem('token');
+            
+            projects = [];
+            tasks = [];
+            
+            showAuthPage();
+        }
+
+        function showAuthPage() {
+            document.getElementById('authPage').style.display = 'flex';
+            document.getElementById('mainApp').style.display = 'none';
+        }
+
+        function showMainApp() {
+            document.getElementById('authPage').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            
+            document.getElementById('userAvatar').textContent = currentUser.nickname.charAt(0).toUpperCase();
+            document.getElementById('userName').textContent = currentUser.nickname;
+            
+            loadData();
+        }
+
+        // Check auth on load
+        async function checkAuth() {
+            if (!token) {
+                showAuthPage();
+                return;
+            }
+            
+            try {
+                currentUser = await fetchWithAuth(`${API_URL}/auth/me`);
+                showMainApp();
+            } catch (error) {
+                localStorage.removeItem('token');
+                token = null;
+                showAuthPage();
+            }
+        }
 
         // API Functions
         async function fetchProjects() {
-            const response = await fetch(`${API_URL}/projects`);
-            return await response.json();
+            return await fetchWithAuth(`${API_URL}/projects`);
         }
 
         async function createProject(name) {
             const id = 'p' + Date.now();
-            await fetch(`${API_URL}/projects`, {
+            await fetchWithAuth(`${API_URL}/projects`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id, name })
             });
             return { id, name };
         }
 
         async function deleteProject(id) {
-            await fetch(`${API_URL}/projects/${id}`, { method: 'DELETE' });
+            await fetchWithAuth(`${API_URL}/projects/${id}`, { method: 'DELETE' });
         }
 
         async function fetchTasks(projectId = null) {
             const url = projectId 
                 ? `${API_URL}/tasks?project_id=${projectId}`
                 : `${API_URL}/tasks`;
-            const response = await fetch(url);
-            return await response.json();
+            return await fetchWithAuth(url);
         }
 
         async function createTask(task) {
-            await fetch(`${API_URL}/tasks`, {
+            await fetchWithAuth(`${API_URL}/tasks`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(task)
             });
         }
 
         async function updateTask(id, task) {
-            await fetch(`${API_URL}/tasks/${id}`, {
+            await fetchWithAuth(`${API_URL}/tasks/${id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(task)
             });
         }
 
         async function toggleTask(id) {
-            await fetch(`${API_URL}/tasks/${id}/toggle`, { method: 'PATCH' });
+            await fetchWithAuth(`${API_URL}/tasks/${id}/toggle`, { method: 'PATCH' });
         }
 
         async function deleteTask(id) {
-            await fetch(`${API_URL}/tasks/${id}`, { method: 'DELETE' });
-        }
-
-        async function exportData() {
-            window.location.href = `${API_URL}/export`;
-        }
-
-        async function importData(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    
-                    if (!data.projects || !Array.isArray(data.projects)) {
-                        throw new Error('Invalid file format: missing projects array');
-                    }
-                    if (!data.tasks || !Array.isArray(data.tasks)) {
-                        throw new Error('Invalid file format: missing tasks array');
-                    }
-                    
-                    if (!confirm('This will replace all existing data. Continue?')) {
-                        return;
-                    }
-                    
-                    await fetch(`${API_URL}/import`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    });
-                    
-                    showNotification('Data imported successfully!');
-                    await loadData();
-                } catch (error) {
-                    alert('Failed to import data: ' + error.message);
-                }
-            };
-            reader.readAsText(file);
-            event.target.value = '';
+            await fetchWithAuth(`${API_URL}/tasks/${id}`, { method: 'DELETE' });
         }
 
         // View Switching
@@ -1040,6 +1350,24 @@
             document.getElementById('boardViewBtn').classList.toggle('active', view === 'board');
             document.getElementById('listView').classList.toggle('hidden', view !== 'list');
             document.getElementById('boardView').classList.toggle('active', view === 'board');
+        }
+
+        // Filter Toggle
+        function toggleFilter() {
+            showCompleted = !showCompleted;
+            const btnText = document.getElementById('filterBtnText');
+            const btn = document.getElementById('filterToggleBtn');
+            
+            if (showCompleted) {
+                btnText.textContent = 'Completed';
+                btn.classList.add('active');
+            } else {
+                btnText.textContent = 'Active';
+                btn.classList.remove('active');
+            }
+            
+            renderTasks();
+            renderBoard();
         }
 
         // Render Board View
@@ -1083,7 +1411,7 @@
                 </div>
             `;
 
-            // Get display tasks (filtered by showCompleted)
+            // Get display tasks
             const displayTasks = filteredTasks.filter(t => Boolean(t.completed) === showCompleted);
 
             if (projectsToShow.length === 0) {
@@ -1103,13 +1431,11 @@
                 const projectTasks = tasks
                     .filter(t => t.project_id === project.id && Boolean(t.completed) === showCompleted)
                     .sort((a, b) => {
-                        // First sort by deadline (sooner first)
                         const dateA = new Date(a.deadline);
                         const dateB = new Date(b.deadline);
                         if (dateA.getTime() !== dateB.getTime()) {
                             return dateA - dateB;
                         }
-                        // Then sort by priority (high > medium > low)
                         const priorityOrder = { high: 0, medium: 1, low: 2 };
                         return priorityOrder[a.priority] - priorityOrder[b.priority];
                     });
@@ -1219,17 +1545,13 @@
             // Filter by completed status for display
             const displayTasks = filteredTasks.filter(t => Boolean(t.completed) === showCompleted);
 
-            // Sort by deadline (sooner first), then by priority (high > medium > low)
+            // Sort by deadline, then priority
             displayTasks.sort((a, b) => {
                 const dateA = new Date(a.deadline);
                 const dateB = new Date(b.deadline);
-                
-                // First sort by deadline
                 if (dateA.getTime() !== dateB.getTime()) {
                     return dateA - dateB;
                 }
-                
-                // Then sort by priority (high = 0, medium = 1, low = 2)
                 const priorityOrder = { high: 0, medium: 1, low: 2 };
                 return priorityOrder[a.priority] - priorityOrder[b.priority];
             });
@@ -1290,8 +1612,7 @@
 
         async function selectProject(projectId) {
             currentProject = projectId;
-            // Always fetch all tasks to keep sidebar counts accurate
-            tasks = await fetchTasks(null);
+            tasks = await fetchTasks(projectId === 'all' ? null : currentProject);
             renderProjects();
             renderTasks();
             renderBoard();
@@ -1314,7 +1635,9 @@
 
             await createProject(name);
             projects = await fetchProjects();
+            tasks = await fetchTasks(null);
             renderProjects();
+            renderTasks();
             renderBoard();
             closeProjectModal();
         }
@@ -1323,7 +1646,7 @@
             if (!confirm('Delete this project and all its tasks?')) return;
             await deleteProject(projectId);
             projects = await fetchProjects();
-            tasks = await fetchTasks(currentProject === 'all' ? null : currentProject);
+            tasks = await fetchTasks(null);
             if (currentProject === projectId) {
                 currentProject = 'all';
             }
@@ -1369,12 +1692,11 @@
                 name,
                 description,
                 priority,
-                deadline,
-                completed: false
+                deadline
             };
 
             await createTask(task);
-            tasks = await fetchTasks(currentProject === 'all' ? null : currentProject);
+            tasks = await fetchTasks(null);
             renderProjects();
             renderTasks();
             renderBoard();
@@ -1406,7 +1728,7 @@
                 task.deadline = document.getElementById('taskDeadline').value;
 
                 await updateTask(taskId, task);
-                tasks = await fetchTasks(currentProject === 'all' ? null : currentProject);
+                tasks = await fetchTasks(null);
                 renderProjects();
                 renderTasks();
                 renderBoard();
@@ -1429,7 +1751,7 @@
 
         async function toggleComplete(taskId) {
             await toggleTask(taskId);
-            tasks = await fetchTasks(currentProject === 'all' ? null : currentProject);
+            tasks = await fetchTasks(null);
             renderTasks();
             renderBoard();
         }
@@ -1451,28 +1773,6 @@
             }
         }
 
-        // Filter Toggle - switch between active and completed tasks
-        function toggleFilter() {
-            showCompleted = !showCompleted;
-            const btnText = document.getElementById('filterBtnText');
-            const btn = document.getElementById('filterToggleBtn');
-            
-            if (showCompleted) {
-                btnText.textContent = 'Completed';
-                btn.style.borderColor = 'var(--primary)';
-                btn.style.color = 'var(--primary)';
-                btn.style.background = '#eef2ff';
-            } else {
-                btnText.textContent = 'Active';
-                btn.style.borderColor = 'var(--border)';
-                btn.style.color = 'var(--text-light)';
-                btn.style.background = 'var(--card-bg)';
-            }
-            
-            renderTasks();
-            renderBoard();
-        }
-
         // Utility
         function escapeHtml(text) {
             const div = document.createElement('div');
@@ -1480,35 +1780,9 @@
             return div.innerHTML;
         }
 
-        // Show notification
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: var(--primary);
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 10px;
-                box-shadow: var(--shadow-lg);
-                z-index: 2000;
-                animation: fadeIn 0.3s ease;
-            `;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transition = 'opacity 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 2500);
-        }
-
         // Load data
         async function loadData() {
             projects = await fetchProjects();
-            // Always fetch all tasks to keep sidebar counts accurate
             tasks = await fetchTasks(null);
             renderProjects();
             renderTasks();
@@ -1517,7 +1791,7 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            loadData();
+            checkAuth();
         });
 
         // Close modal on outside click
