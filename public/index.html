@@ -1303,6 +1303,18 @@
             document.getElementById('loginUsername').value = '';
             document.getElementById('loginPassword').value = '';
             
+            // Reset login button state
+            const loginBtn = document.getElementById('loginBtn');
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Login';
+            
+            // Reset signup button state if exists
+            const signupBtn = document.getElementById('signupBtn');
+            if (signupBtn) {
+                signupBtn.disabled = false;
+                signupBtn.textContent = 'Sign Up';
+            }
+            
             showAuthPage();
         }
 
