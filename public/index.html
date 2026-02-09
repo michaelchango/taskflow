@@ -975,6 +975,234 @@
             width: 14px;
             height: 14px;
         }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            /* Header */
+            header {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+            }
+
+            .logo svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .user-name {
+                display: none;
+            }
+
+            /* Container */
+            .container {
+                padding: 1rem;
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 99;
+                border-radius: 0;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                overflow-y: auto;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .sidebar-toggle {
+                display: flex;
+            }
+
+            /* Main Content */
+            .main-content {
+                padding: 1.25rem;
+                border-radius: 12px;
+            }
+
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+                padding-bottom: 1rem;
+            }
+
+            .content-header h1 {
+                font-size: 1.25rem;
+            }
+
+            .add-task-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Task Stats */
+            .task-stats {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-card .stat-number {
+                font-size: 1.5rem;
+            }
+
+            /* Board Grid */
+            .board-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .project-block {
+                border-radius: 12px;
+            }
+
+            .project-block-header {
+                padding: 0.875rem 1rem;
+            }
+
+            .project-block-header h3 {
+                font-size: 0.9rem;
+            }
+
+            .project-block-tasks {
+                padding: 0.5rem;
+            }
+
+            /* Task Cards */
+            .task-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .task-card {
+                padding: 1rem;
+            }
+
+            .task-card h4 {
+                font-size: 1rem;
+            }
+
+            /* Modal */
+            .modal-overlay {
+                padding: 1rem;
+                align-items: flex-end;
+            }
+
+            .modal {
+                max-width: 100%;
+                border-radius: 16px 16px 0 0;
+                padding: 1.5rem;
+                transform: translateY(100%);
+            }
+
+            .modal-overlay.active .modal {
+                transform: translateY(0);
+            }
+
+            .modal h2 {
+                font-size: 1.1rem;
+            }
+
+            .form-actions {
+                flex-direction: column-reverse;
+            }
+
+            .form-actions .btn {
+                width: 100%;
+            }
+
+            /* Auth Page */
+            .auth-card {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+
+            .auth-logo {
+                font-size: 1.5rem;
+            }
+
+            /* Empty State */
+            .empty-state {
+                padding: 2rem 1rem;
+                min-height: 250px;
+            }
+
+            .empty-state svg {
+                width: 60px;
+                height: 60px;
+            }
+
+            .empty-state h3 {
+                font-size: 1.1rem;
+            }
+
+            /* Board Empty */
+            .board-empty {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+
+            .header-actions {
+                gap: 0.5rem;
+            }
+
+            .header-btn {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.7rem;
+            }
+
+            .logout-btn {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.7rem;
+            }
+
+            .project-item {
+                padding: 0.75rem;
+            }
+
+            .add-project-btn {
+                padding: 0.75rem;
+            }
+
+            .board-task-item {
+                padding: 0.75rem;
+            }
+
+            .board-task-title {
+                font-size: 0.8rem;
+            }
+
+            .board-task-meta {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1853,18 +2081,37 @@
         let sidebarVisible = true;
         
         function toggleSidebar() {
-            sidebarVisible = !sidebarVisible;
-            const container = document.querySelector('.container');
             const sidebar = document.querySelector('.sidebar');
+            const isMobile = window.innerWidth <= 768;
             
-            if (sidebarVisible) {
-                container.classList.remove('sidebar-hidden');
-                sidebar.classList.remove('hidden');
+            if (isMobile) {
+                sidebar.classList.toggle('active');
             } else {
-                container.classList.add('sidebar-hidden');
-                sidebar.classList.add('hidden');
+                sidebarVisible = !sidebarVisible;
+                const container = document.querySelector('.container');
+                
+                if (sidebarVisible) {
+                    container.classList.remove('sidebar-hidden');
+                    sidebar.classList.remove('hidden');
+                } else {
+                    container.classList.add('sidebar-hidden');
+                    sidebar.classList.add('hidden');
+                }
             }
         }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const sidebar = document.querySelector('.sidebar');
+            const isMobile = window.innerWidth <= 768;
+            
+            if (!isMobile && sidebar.classList.contains('active')) {
+                // Switch to desktop mode - show sidebar
+                sidebar.classList.remove('active');
+                sidebar.classList.remove('hidden');
+                sidebarVisible = true;
+            }
+        });
 
         // Utility
         function escapeHtml(text) {
