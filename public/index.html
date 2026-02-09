@@ -780,6 +780,28 @@
             color: var(--danger);
         }
 
+        /* Project Edit Button */
+        .edit-project-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+        .edit-project-btn:hover {
+            opacity: 1;
+            background: #eef2ff;
+            color: var(--primary);
+        }
+
         /* Loading */
         .loading {
             text-align: center;
@@ -1476,6 +1498,7 @@
         let currentProject = 'all';
         let currentView = 'list';
         let showCompleted = false;
+        let currentEditingProjectId = null;
         let isProjectSubmitting = false;
         let isTaskSubmitting = false;
 
@@ -1656,6 +1679,13 @@
             await fetchWithAuth(`${API_URL}/projects/${id}`, { method: 'DELETE' });
         }
 
+        async function updateProject(id, name) {
+            await fetchWithAuth(`${API_URL}/projects/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify({ name })
+            });
+        }
+
         async function fetchTasks(projectId = null) {
             const url = projectId 
                 ? `${API_URL}/tasks?project_id=${projectId}`
@@ -1834,6 +1864,12 @@
                             <span>${escapeHtml(p.name)}</span>
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
                                 <span class="task-count">${count}</span>
+                                <button class="edit-project-btn" onclick="event.stopPropagation(); openProjectModal('${p.id}')" title="Edit project">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                </button>
                                 <button class="delete-project-btn" onclick="event.stopPropagation(); handleDeleteProject('${p.id}')" title="Delete project">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <polyline points="3 6 5 6 21 6"></polyline>
@@ -1961,13 +1997,30 @@
         }
 
         // Project CRUD
-        function openProjectModal() {
-            document.getElementById('projectName').value = '';
+        function openProjectModal(projectId = null) {
+            currentEditingProjectId = projectId;
+            const modalTitle = document.getElementById('projectModalTitle');
+            const nameInput = document.getElementById('projectName');
+            
+            if (projectId) {
+                // Edit mode
+                const project = projects.find(p => p.id === projectId);
+                if (project) {
+                    modalTitle.textContent = 'Edit Project';
+                    nameInput.value = project.name;
+                }
+            } else {
+                // Create mode
+                modalTitle.textContent = 'Add New Project';
+                nameInput.value = '';
+            }
+            
             document.getElementById('projectModal').classList.add('active');
         }
 
         function closeProjectModal() {
             document.getElementById('projectModal').classList.remove('active');
+            currentEditingProjectId = null;
         }
 
         async function saveProject(e) {
@@ -1982,11 +2035,17 @@
             const form = document.getElementById('projectForm');
             const submitBtn = form.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Saving...';
+            submitBtn.textContent = currentEditingProjectId ? 'Updating...' : 'Saving...';
             form.onsubmit = null; // Remove submit handler to prevent double submission
 
             try {
-                await createProject(name);
+                if (currentEditingProjectId) {
+                    // Update existing project
+                    await updateProject(currentEditingProjectId, name);
+                } else {
+                    // Create new project
+                    await createProject(name);
+                }
                 projects = await fetchProjects();
                 allTasks = await fetchTasks(null);
                 tasks = await fetchTasks(null);
@@ -2030,7 +2089,13 @@
             document.getElementById('taskName').value = '';
             document.getElementById('taskDescription').value = '';
             document.getElementById('taskPriority').value = 'medium';
-            document.getElementById('taskDeadline').value = new Date().toISOString().split('T')[0];
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('taskDeadline').value = today;
+            // Reset Flatpickr internal state
+            if (datePicker) {
+                datePicker.clear();
+                datePicker.setDate(today);
+            }
 
             document.getElementById('taskModal').classList.add('active');
         }

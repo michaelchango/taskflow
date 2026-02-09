@@ -230,6 +230,24 @@ app.delete('/api/projects/:id', requireAuth, async (req, res) => {
     }
 });
 
+// Update project
+app.put('/api/projects/:id', requireAuth, async (req, res) => {
+    try {
+        const { name } = req.body;
+        
+        // Verify project belongs to user
+        const project = await get('SELECT * FROM projects WHERE id = ? AND user_id = ?', [req.params.id, req.userId]);
+        if (!project) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
+
+        await run('UPDATE projects SET name = ? WHERE id = ?', [name, req.params.id]);
+        res.json({ id: req.params.id, name });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // ============ TASKS API ============
 
 // Get all tasks (user's only)
