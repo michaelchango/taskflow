@@ -1356,7 +1356,7 @@
         }
 
         async function createProject(name) {
-            const id = 'p' + Date.now();
+            const id = 'p' + Date.now() + Math.random().toString(36).substr(2, 9);
             await fetchWithAuth(`${API_URL}/projects`, {
                 method: 'POST',
                 body: JSON.stringify({ id, name })
@@ -1771,7 +1771,7 @@
 
             try {
                 const task = {
-                    id: 't' + Date.now(),
+                    id: 't' + Date.now() + Math.random().toString(36).substr(2, 9),
                     project_id,
                     name,
                     description,
