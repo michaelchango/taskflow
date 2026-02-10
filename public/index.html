@@ -803,6 +803,15 @@
         .btn-secondary:hover {
             background: var(--border);
         }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+        }
 
         /* Project Delete Button */
         .delete-project-btn {
@@ -1548,6 +1557,18 @@
             </div>
         </div>
     </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal">
+            <h2 data-i18n="confirmDelete">Confirm Delete</h2>
+            <p id="confirmMessage"></p>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeConfirmModal()" data-i18n="cancel">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn" data-i18n="delete">Delete</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // API Base URL
@@ -1623,6 +1644,8 @@
                 markComplete: '标记完成',
                 markIncomplete: '标记未完成',
                 deleteTask: '删除任务',
+                confirmDelete: '确认删除',
+                delete: '删除',
                 
                 // Messages
                 deleteProjectConfirm: '确定删除此项目及其所有任务？',
@@ -1637,12 +1660,13 @@
                 noTasks: '暂无任务',
                 createFirstProject: '创建您的第一个项目',
                 createFirstTask: '创建您的第一个任务',
+                unknownProject: '未知项目',
                 
                 // Board
                 noActiveTasks: '暂无进行中任务',
                 noCompletedTasks: '暂无已完成任务',
                 allTasksActive: '所有任务仍在进行中',
-                addFirstTask: '添加您的第一个任务以开始',
+                addFirstTask: '添加您的第一个任务',
                 tasks: '个任务',
             },
             en: {
@@ -1713,6 +1737,8 @@
                 markComplete: 'Mark complete',
                 markIncomplete: 'Mark incomplete',
                 deleteTask: 'Delete task',
+                confirmDelete: 'Confirm Delete',
+                delete: 'Delete',
                 
                 // Messages
                 deleteProjectConfirm: 'Delete this project and all its tasks?',
@@ -1727,6 +1753,7 @@
                 noTasks: 'No tasks yet',
                 createFirstProject: 'Create your first project',
                 createFirstTask: 'Create your first task',
+                unknownProject: 'Unknown Project',
                 
                 // Board
                 noActiveTasks: 'No active tasks',
@@ -2055,7 +2082,7 @@
                 projectTitle.textContent = showCompleted ? t('completedTasks') : t('activeTasks');
             } else {
                 const project = projects.find(p => p.id === currentProject);
-                projectTitle.textContent = project ? (showCompleted ? project.name + ' - ' + t('completedTasks') : project.name) : 'Unknown Project';
+                projectTitle.textContent = project ? (showCompleted ? project.name + ' - ' + t('completedTasks') : project.name) : t('unknownProject');
             }
 
             // Update stats
@@ -2090,8 +2117,8 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                         </svg>
-                        <h3>No projects yet</h3>
-                        <p>Create your first project to get started</p>
+                        <h3>${t('noProjects')}</h3>
+                        <p>${t('createFirstProject')}</p>
                     </div>
                 `;
                 return;
@@ -2195,7 +2222,7 @@
                 projectTitle.textContent = showCompleted ? t('completedTasks') : t('activeTasks');
             } else {
                 const project = projects.find(p => p.id === currentProject);
-                projectTitle.textContent = project ? (showCompleted ? project.name + ' - ' + t('completedTasks') : project.name) : 'Unknown Project';
+                projectTitle.textContent = project ? (showCompleted ? project.name + ' - ' + t('completedTasks') : project.name) : t('unknownProject');
             }
 
             // Update stats - show overall counts
@@ -2363,17 +2390,18 @@
         }
 
         async function handleDeleteProject(projectId) {
-            if (!confirm('Delete this project and all its tasks?')) return;
-            await deleteProject(projectId);
-            projects = await fetchProjects();
-            allTasks = await fetchTasks(null);
-            tasks = await fetchTasks(null);
-            if (currentProject === projectId) {
-                currentProject = 'all';
-            }
-            renderProjects();
-            renderTasks();
-            renderBoard();
+            showConfirmModal(t('deleteProjectConfirm'), async () => {
+                await deleteProject(projectId);
+                projects = await fetchProjects();
+                allTasks = await fetchTasks(null);
+                tasks = await fetchTasks(null);
+                if (currentProject === projectId) {
+                    currentProject = 'all';
+                }
+                renderProjects();
+                renderTasks();
+                renderBoard();
+            });
         }
 
         // Task CRUD
@@ -2401,6 +2429,30 @@
         function closeTaskModal() {
             document.getElementById('taskModal').classList.remove('active');
         }
+        
+        // Confirmation Modal Functions
+        let confirmCallback = null;
+        
+        function showConfirmModal(message, callback) {
+            document.getElementById('confirmMessage').textContent = message;
+            document.getElementById('confirmModal').classList.add('active');
+            confirmCallback = callback;
+        }
+        
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+            confirmCallback = null;
+        }
+        
+        function handleConfirmDelete() {
+            if (confirmCallback) {
+                confirmCallback();
+            }
+            closeConfirmModal();
+        }
+        
+        // Attach click handler to confirm button
+        document.getElementById('confirmDeleteBtn').onclick = handleConfirmDelete;
 
         async function saveTask(e) {
             e.preventDefault();
@@ -2489,13 +2541,14 @@
         }
 
         async function deleteTask(taskId) {
-            if (!confirm('Delete this task?')) return;
-            await deleteTask(taskId);
-            tasks = tasks.filter(t => t.id !== taskId);
-            allTasks = allTasks.filter(t => t.id !== taskId);
-            renderProjects();
-            renderTasks();
-            renderBoard();
+            showConfirmModal(t('deleteTaskConfirm'), async () => {
+                await fetchWithAuth(`${API_URL}/tasks/${taskId}`, { method: 'DELETE' });
+                tasks = tasks.filter(t => t.id !== taskId);
+                allTasks = allTasks.filter(t => t.id !== taskId);
+                renderProjects();
+                renderTasks();
+                renderBoard();
+            });
         }
 
         async function toggleComplete(taskId) {
