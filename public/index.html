@@ -39,6 +39,7 @@
         .auth-page {
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 2rem;
@@ -196,6 +197,20 @@
             background: #ffffff !important;
             color: #1e293b !important;
         }
+        
+        .flatpickr-confirm, .flatpickr-close, .flatpickr-cancel {
+            white-space: nowrap !important;
+            display: inline-block !important;
+            width: auto !important;
+            min-width: 60px !important;
+        }
+        
+        .flatpickr-confirmContainer, .flatpickr-buttons {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            justify-content: center !important;
+            gap: 8px !important;
+        }
 
         .form-group textarea {
             width: 100%;
@@ -239,6 +254,22 @@
         .btn-primary:disabled {
             background: var(--text-light);
             cursor: not-allowed;
+        }
+        
+        /* Chinese language button widths */
+        html[lang="zh"] .form-actions .btn,
+        body[data-language="zh"] .form-actions .btn {
+            min-width: 120px;
+        }
+        
+        html[lang="zh"] .form-actions .btn-secondary,
+        body[data-language="zh"] .form-actions .btn-secondary {
+            min-width: 100px;
+        }
+        
+        html[lang="zh"] .form-actions .btn-primary,
+        body[data-language="zh"] .form-actions .btn-primary {
+            min-width: 100px;
         }
 
         .auth-error {
@@ -339,6 +370,21 @@
             border-color: var(--danger);
             color: var(--danger);
             background: #fee2e2;
+        }
+
+        .language-switch {
+            padding: 0.5rem 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .language-switch:hover {
+            border-color: var(--primary);
         }
 
         .header-actions {
@@ -1205,11 +1251,17 @@
             }
 
             .form-actions {
-                flex-direction: column-reverse;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 0.75rem;
             }
 
             .form-actions .btn {
-                width: 100%;
+                flex: 1 1 0% !important;
+                min-width: 0;
+                white-space: nowrap;
+                padding: 0.875rem 0.5rem;
+                width: auto !important;
             }
 
             /* Auth Page */
@@ -1294,47 +1346,55 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                 </svg>
-                TaskFlow
+                <span data-i18n="taskflow">TaskFlow</span>
             </div>
-            <p class="auth-subtitle">Manage your tasks efficiently</p>
+            <p class="auth-subtitle" data-i18n="manageTasks">Manage your tasks efficiently</p>
 
             <div class="auth-error" id="authError"></div>
             <div class="auth-success" id="authSuccess"></div>
 
             <div class="auth-tabs">
-                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
-                <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+                <button class="auth-tab active" onclick="switchAuthTab('login')" data-i18n="login">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('signup')" data-i18n="signUp">Sign Up</button>
             </div>
 
             <!-- Login Form -->
             <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
                 <div class="form-group">
-                    <label for="loginUsername">Username</label>
-                    <input type="text" id="loginUsername" placeholder="Enter username" required>
+                    <label data-i18n="username">Username</label>
+                    <input type="text" id="loginUsername" data-i18n="enterUsername" placeholder="Enter username" required>
                 </div>
                 <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter password" required>
+                    <label data-i18n="password">Password</label>
+                    <input type="password" id="loginPassword" data-i18n="enterPassword" placeholder="Enter password" required>
                 </div>
-                <button type="submit" class="btn btn-primary" id="loginBtn">Login</button>
+                <button type="submit" class="btn btn-primary" id="loginBtn" data-i18n="login">Login</button>
             </form>
 
             <!-- Signup Form -->
             <form class="auth-form" id="signupForm" onsubmit="handleSignup(event)">
                 <div class="form-group">
-                    <label for="signupUsername">Username</label>
-                    <input type="text" id="signupUsername" placeholder="Choose username" required>
+                    <label data-i18n="username">Username</label>
+                    <input type="text" id="signupUsername" data-i18n="enterUsername" placeholder="Choose username" required>
                 </div>
                 <div class="form-group">
-                    <label for="signupNickname">Nickname</label>
-                    <input type="text" id="signupNickname" placeholder="Your display name" required>
+                    <label data-i18n="nickname">Nickname</label>
+                    <input type="text" id="signupNickname" data-i18n="displayName" placeholder="Your display name" required>
                 </div>
                 <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" placeholder="Choose password" required>
+                    <label data-i18n="password">Password</label>
+                    <input type="password" id="signupPassword" data-i18n="choosePassword" placeholder="Choose password" required>
                 </div>
-                <button type="submit" class="btn btn-primary" id="signupBtn">Create Account</button>
+                <button type="submit" class="btn btn-primary" id="signupBtn" data-i18n="createAccount">Create Account</button>
             </form>
+        </div>
+        
+        <!-- Language switch outside login box -->
+        <div style="width: 100%; text-align: center; margin-top: 1rem;">
+            <select class="language-switch" id="authLanguageSelect" onchange="setLanguage(this.value)">
+                <option value="zh" selected>中文</option>
+                <option value="en">English</option>
+            </select>
         </div>
     </div>
 
@@ -1346,14 +1406,18 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                     </svg>
-                    TaskFlow
+                    <span data-i18n="taskflow">TaskFlow</span>
                 </div>
                 <div class="header-right">
+                    <select class="language-switch" id="languageSelect" onchange="setLanguage(this.value)">
+                        <option value="zh" selected>中文</option>
+                        <option value="en">English</option>
+                    </select>
                     <div class="user-info">
                         <div class="user-avatar" id="userAvatar">U</div>
                         <span class="user-name" id="userName">User</span>
                     </div>
-                    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+                    <button class="logout-btn" onclick="handleLogout()" data-i18n="logout">Logout</button>
                     <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -1367,17 +1431,17 @@
 
         <div class="container">
             <aside class="sidebar">
-                <h2>Projects</h2>
+                <h2 data-i18n="projects">Projects</h2>
                 <ul class="project-list" id="projectList"></ul>
                 <button class="add-project-btn" onclick="openProjectModal()">
-                    <span>+</span> Add Project
+                    <span>+</span> <span data-i18n="addProject">Add Project</span>
                 </button>
             </aside>
 
             <main class="main-content">
                 <div class="content-header">
                     <div style="display: flex; align-items: center; gap: 1rem;">
-                        <h1 id="projectTitle">All Tasks</h1>
+                        <h1 id="projectTitle" data-i18n="allTasks">All Tasks</h1>
                         <div class="view-toggle">
                             <button id="listViewBtn" class="active" onclick="switchView('list')">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;">
@@ -1388,7 +1452,7 @@
                                     <line x1="3" y1="12" x2="3.01" y2="12"></line>
                                     <line x1="3" y1="18" x2="3.01" y2="18"></line>
                                 </svg>
-                                List
+                                <span data-i18n="listView">List</span>
                             </button>
                             <button id="boardViewBtn" onclick="switchView('board')">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;">
@@ -1397,14 +1461,14 @@
                                     <rect x="14" y="14" width="7" height="7"></rect>
                                     <rect x="3" y="14" width="7" height="7"></rect>
                                 </svg>
-                                Board
+                                <span data-i18n="boardView">Board</span>
                             </button>
                         </div>
                         <button class="filter-toggle" id="filterToggleBtn" onclick="toggleFilter()">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;">
                                 <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
                             </svg>
-                            <span id="filterBtnText">Active</span>
+                            <span id="filterBtnText" data-i18n="activeTasks">Active</span>
                         </button>
                     </div>
                     <button class="add-task-btn" onclick="openTaskModal()">
@@ -1412,7 +1476,7 @@
                             <line x1="12" y1="5" x2="12" y2="19"></line>
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                         </svg>
-                        Add Task
+                        <span data-i18n="addTask">Add Task</span>
                     </button>
                 </div>
 
@@ -1431,15 +1495,15 @@
         <!-- Project Modal -->
         <div class="modal-overlay" id="projectModal">
             <div class="modal">
-                <h2 id="projectModalTitle">Add New Project</h2>
+                <h2 id="projectModalTitle" data-i18n="addNewProject">Add New Project</h2>
                 <form id="projectForm" onsubmit="saveProject(event)">
                     <div class="form-group">
-                        <label>Project Name</label>
-                        <input type="text" id="projectName" placeholder="Enter project name" required>
+                        <label data-i18n="projectName">Project Name</label>
+                        <input type="text" id="projectName" data-i18n="enterProjectName" placeholder="Enter project name" required>
                     </div>
                     <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save Project</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeProjectModal()" data-i18n="cancel">Cancel</button>
+                        <button type="submit" class="btn btn-primary" data-i18n="saveProject">Save Project</button>
                     </div>
                 </form>
             </div>
@@ -1448,37 +1512,37 @@
         <!-- Task Modal -->
         <div class="modal-overlay" id="taskModal">
             <div class="modal">
-                <h2 id="taskModalTitle">Add New Task</h2>
+                <h2 id="taskModalTitle" data-i18n="addNewTask">Add New Task</h2>
                 <form id="taskForm" onsubmit="saveTask(event)">
                     <div class="form-group">
-                        <label>Project</label>
-                        <select id="taskProject" required>
+                        <label data-i18n="project">Project</label>
+                        <select id="taskProject" data-i18n="selectProject" required>
                             <option value="">Select a project</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Task Name</label>
-                        <input type="text" id="taskName" placeholder="What needs to be done?" required>
+                        <label data-i18n="taskName">Task Name</label>
+                        <input type="text" id="taskName" data-i18n="whatNeedsToBeDone" placeholder="What needs to be done?" required>
                     </div>
                     <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="taskDescription" placeholder="Add more details..."></textarea>
+                        <label data-i18n="description">Description</label>
+                        <textarea id="taskDescription" data-i18n="addMoreDetails" placeholder="Add more details..."></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Priority</label>
+                        <label data-i18n="priority">Priority</label>
                         <select id="taskPriority" required>
-                            <option value="low">Low</option>
-                            <option value="medium" selected>Medium</option>
-                            <option value="high">High</option>
+                            <option value="low" data-i18n="low">Low</option>
+                            <option value="medium" data-i18n="medium" selected>Medium</option>
+                            <option value="high" data-i18n="high">High</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Deadline</label>
+                        <label data-i18n="deadline">Deadline</label>
                         <input type="date" id="taskDeadline" onclick="this.showPicker()" required>
                     </div>
                     <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" onclick="closeTaskModal()">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save Task</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeTaskModal()" data-i18n="cancel">Cancel</button>
+                        <button type="submit" class="btn btn-primary" data-i18n="saveTask">Save Task</button>
                     </div>
                 </form>
             </div>
@@ -1488,6 +1552,239 @@
     <script>
         // API Base URL
         const API_URL = '/api';
+        
+        // Language translations
+        const translations = {
+            zh: {
+                // Auth
+                taskflow: '任务流',
+                manageTasks: '高效管理您的任务',
+                login: '登录',
+                signUp: '注册',
+                username: '用户名',
+                enterUsername: '请输入用户名',
+                password: '密码',
+                enterPassword: '请输入密码',
+                createAccount: '创建账户',
+                nickname: '昵称',
+                displayName: '您的显示名称',
+                choosePassword: '请设置密码',
+                
+                // Header
+                logout: '退出',
+                
+                // Sidebar
+                allTasks: '所有任务',
+                addProject: '添加项目',
+                projects: '项目',
+                
+                // Content Header
+                listView: '列表视图',
+                boardView: '看板视图',
+                filterToggle: '筛选',
+                addTask: '添加任务',
+                
+                // Task filters
+                activeTasks: '进行中',
+                completedTasks: '已完成',
+                
+                // Stats
+                totalTasks: '任务总数',
+                highPriority: '高优先级',
+                completed: '已完成',
+                
+                // Priorities
+                high: '高',
+                medium: '中',
+                low: '低',
+                
+                // Task modal
+                addNewTask: '添加新任务',
+                editTask: '编辑任务',
+                project: '项目',
+                selectProject: '请选择项目',
+                taskName: '任务名称',
+                whatNeedsToBeDone: '需要做什么？',
+                description: '描述',
+                addMoreDetails: '添加更多详情...',
+                priority: '优先级',
+                deadline: '截止日期',
+                cancel: '取消',
+                saveTask: '保存任务',
+                
+                // Project modal
+                addNewProject: '添加新项目',
+                editProject: '编辑项目',
+                projectName: '项目名称',
+                enterProjectName: '请输入项目名称',
+                saveProject: '保存项目',
+                
+                // Task card
+                markComplete: '标记完成',
+                markIncomplete: '标记未完成',
+                deleteTask: '删除任务',
+                
+                // Messages
+                deleteProjectConfirm: '确定删除此项目及其所有任务？',
+                deleteTaskConfirm: '确定删除此任务？',
+                accountCreated: '账户创建成功！请登录。',
+                loginFailed: '登录失败',
+                signupFailed: '注册失败',
+                usernameExists: '用户名已存在',
+                
+                // Empty states
+                noProjects: '暂无项目',
+                noTasks: '暂无任务',
+                createFirstProject: '创建您的第一个项目',
+                createFirstTask: '创建您的第一个任务',
+                
+                // Board
+                noActiveTasks: '暂无进行中任务',
+                noCompletedTasks: '暂无已完成任务',
+                allTasksActive: '所有任务仍在进行中',
+                addFirstTask: '添加您的第一个任务以开始',
+                tasks: '个任务',
+            },
+            en: {
+                // Auth
+                taskflow: 'TaskFlow',
+                manageTasks: 'Manage your tasks efficiently',
+                login: 'Login',
+                signUp: 'Sign Up',
+                username: 'Username',
+                enterUsername: 'Enter username',
+                password: 'Password',
+                enterPassword: 'Enter password',
+                createAccount: 'Create Account',
+                nickname: 'Nickname',
+                displayName: 'Your display name',
+                choosePassword: 'Choose password',
+                
+                // Header
+                logout: 'Logout',
+                
+                // Sidebar
+                allTasks: 'All Tasks',
+                addProject: 'Add Project',
+                projects: 'Projects',
+                
+                // Content Header
+                listView: 'List',
+                boardView: 'Board',
+                filterToggle: 'Filter',
+                addTask: 'Add Task',
+                
+                // Task filters
+                activeTasks: 'Active',
+                completedTasks: 'Completed',
+                
+                // Stats
+                totalTasks: 'Total Tasks',
+                highPriority: 'High Priority',
+                completed: 'Completed',
+                
+                // Priorities
+                high: 'High',
+                medium: 'Medium',
+                low: 'Low',
+                
+                // Task modal
+                addNewTask: 'Add New Task',
+                editTask: 'Edit Task',
+                project: 'Project',
+                selectProject: 'Select a project',
+                taskName: 'Task Name',
+                whatNeedsToBeDone: 'What needs to be done?',
+                description: 'Description',
+                addMoreDetails: 'Add more details...',
+                priority: 'Priority',
+                deadline: 'Deadline',
+                cancel: 'Cancel',
+                saveTask: 'Save Task',
+                
+                // Project modal
+                addNewProject: 'Add New Project',
+                editProject: 'Edit Project',
+                projectName: 'Project Name',
+                enterProjectName: 'Enter project name',
+                saveProject: 'Save Project',
+                
+                // Task card
+                markComplete: 'Mark complete',
+                markIncomplete: 'Mark incomplete',
+                deleteTask: 'Delete task',
+                
+                // Messages
+                deleteProjectConfirm: 'Delete this project and all its tasks?',
+                deleteTaskConfirm: 'Delete this task?',
+                accountCreated: 'Account created! Please login.',
+                loginFailed: 'Login failed',
+                signupFailed: 'Signup failed',
+                usernameExists: 'Username already exists',
+                
+                // Empty states
+                noProjects: 'No projects yet',
+                noTasks: 'No tasks yet',
+                createFirstProject: 'Create your first project',
+                createFirstTask: 'Create your first task',
+                
+                // Board
+                noActiveTasks: 'No active tasks',
+                noCompletedTasks: 'No completed tasks',
+                allTasksActive: 'All tasks are still active',
+                addFirstTask: 'Add your first task to get started',
+                tasks: 'tasks',
+            }
+        };
+        
+        let currentLanguage = localStorage.getItem('language') || 'zh';
+        
+        // Set initial language attributes
+        document.documentElement.setAttribute('lang', currentLanguage);
+        document.body.setAttribute('data-language', currentLanguage);
+        
+        function t(key) {
+            return translations[currentLanguage][key] || key;
+        }
+        
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            document.documentElement.setAttribute('lang', lang);
+            document.body.setAttribute('data-language', lang);
+            updateAllText();
+            // Re-render all dynamic content
+            if (typeof renderProjects === 'function') renderProjects();
+            if (typeof renderTasks === 'function') renderTasks();
+            if (typeof renderBoard === 'function') renderBoard();
+            // Re-initialize date picker with new locale
+            initDatePicker();
+        }
+        
+        function updateAllText() {
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = t(key);
+                } else {
+                    el.textContent = t(key);
+                }
+            });
+            
+            // Update document title
+            document.title = t('taskflow') + ' - ' + t('manageTasks');
+            
+            // Update language selector
+            const langSelect = document.getElementById('languageSelect');
+            const authLangSelect = document.getElementById('authLanguageSelect');
+            if (langSelect) {
+                langSelect.value = currentLanguage;
+            }
+            if (authLangSelect) {
+                authLangSelect.value = currentLanguage;
+            }
+        }
 
         // State
         let token = localStorage.getItem('token');
@@ -1641,6 +1938,7 @@
             document.getElementById('userAvatar').textContent = currentUser.nickname.charAt(0).toUpperCase();
             document.getElementById('userName').textContent = currentUser.nickname;
             
+            updateAllText();
             loadData();
         }
 
@@ -1731,10 +2029,10 @@
             const btn = document.getElementById('filterToggleBtn');
             
             if (showCompleted) {
-                btnText.textContent = 'Completed';
+                btnText.textContent = t('completedTasks');
                 btn.classList.add('active');
             } else {
-                btnText.textContent = 'Active';
+                btnText.textContent = t('activeTasks');
                 btn.classList.remove('active');
             }
             
@@ -1754,10 +2052,10 @@
 
             // Update title
             if (currentProject === 'all') {
-                projectTitle.textContent = showCompleted ? 'Completed Tasks' : 'Active Tasks';
+                projectTitle.textContent = showCompleted ? t('completedTasks') : t('activeTasks');
             } else {
                 const project = projects.find(p => p.id === currentProject);
-                projectTitle.textContent = project ? (showCompleted ? project.name + ' - Completed' : project.name) : 'Unknown Project';
+                projectTitle.textContent = project ? (showCompleted ? project.name + ' - ' + t('completedTasks') : project.name) : 'Unknown Project';
             }
 
             // Update stats
@@ -1771,15 +2069,15 @@
             taskStats.innerHTML = `
                 <div class="stat-card">
                     <div class="stat-number">${total}</div>
-                    <div class="stat-label">Total Tasks</div>
+                    <div class="stat-label">${t('totalTasks')}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${high}</div>
-                    <div class="stat-label">High Priority</div>
+                    <div class="stat-label">${t('highPriority')}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${completed}</div>
-                    <div class="stat-label">Completed</div>
+                    <div class="stat-label">${t('completed')}</div>
                 </div>
             `;
 
@@ -1816,11 +2114,11 @@
                     <div class="project-block">
                         <div class="project-block-header">
                             <h3>${escapeHtml(project.name)}</h3>
-                            <span class="task-count">${projectTasks.length} ${showCompleted ? 'completed' : 'tasks'}</span>
+                            <span class="task-count">${projectTasks.length} ${showCompleted ? t('completed') : t('tasks')}</span>
                         </div>
                         <div class="project-block-tasks">
                             ${projectTasks.length === 0 
-                                ? `<div class="board-empty">No ${showCompleted ? 'completed' : 'active'} tasks</div>`
+                                ? `<div class="board-empty">${showCompleted ? t('noCompletedTasks') : t('noActiveTasks')}</div>`
                                 : projectTasks.map(task => {
                                     const deadline = new Date(task.deadline);
                                     const today = new Date();
@@ -1854,7 +2152,7 @@
             const projectList = document.getElementById('projectList');
             projectList.innerHTML = `
                 <li class="project-item ${currentProject === 'all' ? 'active' : ''}" onclick="selectProject('all')">
-                    <span>All Tasks</span>
+                    <span>${t('allTasks')}</span>
                     <span class="task-count">${allTasks.length}</span>
                 </li>
                 ${projects.map(p => {
@@ -1894,10 +2192,10 @@
 
             // Update title
             if (currentProject === 'all') {
-                projectTitle.textContent = showCompleted ? 'Completed Tasks' : 'Active Tasks';
+                projectTitle.textContent = showCompleted ? t('completedTasks') : t('activeTasks');
             } else {
                 const project = projects.find(p => p.id === currentProject);
-                projectTitle.textContent = project ? (showCompleted ? project.name + ' - Completed' : project.name) : 'Unknown Project';
+                projectTitle.textContent = project ? (showCompleted ? project.name + ' - ' + t('completedTasks') : project.name) : 'Unknown Project';
             }
 
             // Update stats - show overall counts
@@ -1908,15 +2206,15 @@
             taskStats.innerHTML = `
                 <div class="stat-card">
                     <div class="stat-number">${total}</div>
-                    <div class="stat-label">Total Tasks</div>
+                    <div class="stat-label">${t('totalTasks')}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${high}</div>
-                    <div class="stat-label">High Priority</div>
+                    <div class="stat-label">${t('highPriority')}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">${completed}</div>
-                    <div class="stat-label">Completed</div>
+                    <div class="stat-label">${t('completed')}</div>
                 </div>
             `;
 
@@ -1940,8 +2238,8 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                         </svg>
-                        <h3>No ${showCompleted ? 'completed' : 'active'} tasks</h3>
-                        <p>${showCompleted ? 'All tasks are still active' : 'Add your first task to get started'}</p>
+                        <h3>${showCompleted ? t('noCompletedTasks') : t('noActiveTasks')}</h3>
+                        <p>${showCompleted ? t('allTasksActive') : t('addFirstTask')}</p>
                     </div>
                 `;
                 return;
@@ -2006,12 +2304,12 @@
                 // Edit mode
                 const project = projects.find(p => p.id === projectId);
                 if (project) {
-                    modalTitle.textContent = 'Edit Project';
+                    modalTitle.textContent = t('editProject');
                     nameInput.value = project.name;
                 }
             } else {
                 // Create mode
-                modalTitle.textContent = 'Add New Project';
+                modalTitle.textContent = t('addNewProject');
                 nameInput.value = '';
             }
             
@@ -2082,7 +2380,7 @@
         function openTaskModal() {
             const projectSelect = document.getElementById('taskProject');
             projectSelect.innerHTML = `
-                <option value="">Select a project</option>
+                <option value="">${t('selectProject')}</option>
                 ${projects.map(p => `<option value="${p.id}" ${p.id === currentProject && currentProject !== 'all' ? 'selected' : ''}>${escapeHtml(p.name)}</option>`).join('')}
             `;
 
@@ -2167,7 +2465,7 @@
             document.getElementById('taskPriority').value = task.priority;
             document.getElementById('taskDeadline').value = task.deadline;
 
-            document.getElementById('taskModalTitle').textContent = 'Edit Task';
+            document.getElementById('taskModalTitle').textContent = t('editTask');
             document.getElementById('taskForm').onsubmit = async (e) => {
                 e.preventDefault();
                 task.project_id = document.getElementById('taskProject').value;
@@ -2183,7 +2481,7 @@
                 renderTasks();
                 renderBoard();
                 closeTaskModal();
-                document.getElementById('taskModalTitle').textContent = 'Add New Task';
+                document.getElementById('taskModalTitle').textContent = t('addNewTask');
                 document.getElementById('taskForm').onsubmit = saveTask;
             };
 
@@ -2263,6 +2561,7 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            updateAllText();
             checkAuth();
         });
 
@@ -2277,18 +2576,26 @@
     </script>
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh.js"></script>
     <script>
         // Initialize Flatpickr for date input
         let datePicker = null;
         
         function initDatePicker() {
             const dateInput = document.getElementById('taskDeadline');
-            if (dateInput && !datePicker) {
+            if (dateInput) {
+                // Destroy existing date picker if it exists
+                if (datePicker) {
+                    datePicker.destroy();
+                    datePicker = null;
+                }
+                const locale = currentLanguage === 'zh' ? 'zh' : 'default';
                 datePicker = flatpickr(dateInput, {
                     dateFormat: 'Y-m-d',
-                    defaultDate: new Date().toISOString().split('T')[0],
+                    defaultDate: dateInput.value || new Date().toISOString().split('T')[0],
                     allowInput: true,
                     clickOpens: true,
+                    locale: locale,
                     onReady: function(selectedDates, dateStr, instance) {
                         instance.input.removeAttribute('readonly');
                     }
